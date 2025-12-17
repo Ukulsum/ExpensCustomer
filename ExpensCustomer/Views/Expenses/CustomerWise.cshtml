@@ -1,0 +1,61 @@
+﻿@model List<ExpensCustomer.Models.Expense>
+@{
+    ViewBag.Title = "Customer Wise Expenses";
+}
+
+<h2>Customer Wise Expenses</h2>
+
+<form method="get" asp-action="CustomerWise" >
+    <div class="row">
+        <div class="col-1.5 mr-5">
+            <label>Select Customer:</label>
+        </div>
+        <div class="col-6">
+           
+            <select name="customerId" asp-items="@(new SelectList(ViewBag.Customers, "Id", "Name", ViewBag.SelectedCustomerId))" class="form-control">
+                <option value="">--Select Customer--</option>
+            </select>
+        </div>
+        <div class="col-2 mt-1">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+    
+   
+</form>
+
+@if (Model != null && Model.Count > 0)
+{
+    <h3>Total Expenses: @ViewBag.Total.ToString("C")</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-secondary">
+            <tr>
+                <th>Expense Date</th>
+                <th>Note</th>
+                <th>Expense Type</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expense in Model)
+            {
+                foreach (var item in expense.ExpenseItems)
+                {
+                    <tr>
+                        <td>@expense.ExpenseDate.ToShortDateString()</td>
+                        <td>@expense.Note</td>
+                        <td>@item.ExpenseType</td>
+                        <td>@item.Amount.ToString("C")</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No expenses found for the selected customer.</p>
+}
+
+

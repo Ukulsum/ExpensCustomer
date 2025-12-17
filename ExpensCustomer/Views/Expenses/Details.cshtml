@@ -1,0 +1,38 @@
+﻿@model ExpensCustomer.Models.Expense
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+@* <h2>Expense Details</h2> *@
+<h2 class="text-info text-center">Update Expense</h2>
+<div class="p-4 rounded border">
+
+<p><strong>Customer:</strong> @Model.Customer.Name</p>
+<p><strong>Date:</strong> @Model.ExpenseDate.ToShortDateString()</p>
+<p><strong>Note:</strong> @Model.Note</p>
+
+<h4>Expense Items</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Expense Type</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.ExpenseItems)
+        {
+            <tr>
+                <td>@item.ExpenseType</td>
+                <td>@item.Amount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+
+</div>
+
